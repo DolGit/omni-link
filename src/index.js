@@ -9,7 +9,7 @@ const setState = (url, type) => {
 
 const findUrl = (to, href, link) => {
     if (href) return setState(href, 'anchor')
-    if (to) return setState(href, 'link')
+    if (to) return setState(to, 'link')
     if (link.href) return setState(link.href, 'anchor')
     if (link.to) return setState(link.to, 'link')
 
@@ -19,25 +19,33 @@ const findUrl = (to, href, link) => {
 class OmniLink extends React.Component {
     constructor(props) {
         super(props)
+        this.state = this.refresh(props)
+    }
+
+    componentWillReceiveProps(nextProps) {
+        this.setState(this.refresh(nextProps))
+    }
+
+    refresh(props) {
         let {to, href, link} = props
         if (props.static) {
             link = extractLink(props.static)
         }
-        this.state = findUrl(to, href, link)
+        return findUrl(to, href, link)
     }
 
     anchor() {
         return (
-            <a href={this.state.url} className={this.props.className} {...this.props.link}>
-                {this.props.children}
+            <a href={this.state.url} {...this.props} {...this.props.link} className={this.props.className}>
+                {this.props.children || this.props.link.text}
             </a>
         )
     }
 
     link() {
         return (
-            <Link to={this.state.url} className={this.props.className} {...this.props.link}>
-                {this.props.children}
+            <Link to={this.state.url} {...this.props} {...this.props.link} className={this.props.className}>
+                {this.props.children || this.props.link.text}
             </Link>
         )
     }

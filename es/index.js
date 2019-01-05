@@ -17,7 +17,7 @@ var setState = function setState(url, type) {
 
 var findUrl = function findUrl(to, href, link) {
     if (href) return setState(href, 'anchor');
-    if (to) return setState(href, 'link');
+    if (to) return setState(to, 'link');
     if (link.href) return setState(link.href, 'anchor');
     if (link.to) return setState(link.to, 'link');
 
@@ -32,6 +32,15 @@ var OmniLink = function (_React$Component) {
 
         var _this = _possibleConstructorReturn(this, _React$Component.call(this, props));
 
+        _this.state = _this.refresh(props);
+        return _this;
+    }
+
+    OmniLink.prototype.componentWillReceiveProps = function componentWillReceiveProps(nextProps) {
+        this.setState(this.refresh(nextProps));
+    };
+
+    OmniLink.prototype.refresh = function refresh(props) {
         var to = props.to,
             href = props.href,
             link = props.link;
@@ -39,23 +48,22 @@ var OmniLink = function (_React$Component) {
         if (props.static) {
             link = extractLink(props.static);
         }
-        _this.state = findUrl(to, href, link);
-        return _this;
-    }
+        return findUrl(to, href, link);
+    };
 
     OmniLink.prototype.anchor = function anchor() {
         return React.createElement(
             'a',
-            _extends({ href: this.state.url, className: this.props.className }, this.props.link),
-            this.props.children
+            _extends({ href: this.state.url }, this.props, this.props.link, { className: this.props.className }),
+            this.props.children || this.props.link.text
         );
     };
 
     OmniLink.prototype.link = function link() {
         return React.createElement(
             Link,
-            _extends({ to: this.state.url, className: this.props.className }, this.props.link),
-            this.props.children
+            _extends({ to: this.state.url }, this.props, this.props.link, { className: this.props.className }),
+            this.props.children || this.props.link.text
         );
     };
 
