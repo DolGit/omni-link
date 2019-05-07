@@ -56,9 +56,12 @@ class OmniLink extends React.Component {
 }
 
 OmniLink.propTypes = {
-    href: PropTypes.string,
-    to: PropTypes.string,
-    link:   PropTypes.oneOfType([
+    href: PropTypes.string.isRequired,
+    to: PropTypes.oneOfType([
+        PropTypes.string.isRequired,
+        PropTypes.object.isRequired
+    ]),
+    link: PropTypes.oneOfType([
         PropTypes.object.isRequired,
         PropTypes.bool.isRequired
     ])
