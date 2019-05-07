@@ -75,9 +75,9 @@ var OmniLink = function (_React$Component) {
 }(React.Component);
 
 OmniLink.propTypes = process.env.NODE_ENV !== "production" ? {
-    href: PropTypes.string.isRequired,
-    to: PropTypes.oneOfType([PropTypes.string.isRequired, PropTypes.object.isRequired]),
-    link: PropTypes.oneOfType([PropTypes.object.isRequired, PropTypes.bool.isRequired])
+    href: PropTypes.string,
+    to: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+    link: PropTypes.oneOfType([PropTypes.object, PropTypes.bool])
 } : {};
 
 export default OmniLink;
