@@ -1,6 +1,6 @@
 {
   "name": "@dolnpm/omni-link",
-  "version": "0.1.4-development",
+  "version": "0.1.5-development",
   "description": "React component that either creates an internal link with `React-Router Link` or an external link with the regular anchor tag.",
   "main": "lib/index.js",
   "module": "es/index.js",
@@ -20,7 +20,7 @@
     "semantic-release": "semantic-release",
     "travis-deploy-once": "travis-deploy-once"
   },
-  "dependencies": {
+  "peerDependencies": {
     "prop-types": "*",
     "react": "*",
     "react-router-dom": "*",
